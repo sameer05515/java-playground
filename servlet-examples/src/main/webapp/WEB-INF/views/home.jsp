@@ -3,11 +3,28 @@
 <html>
 <head>
     <title>Home</title>
+    <style>
+    .blueLeftBorder{
+    border: 1px solid;
+    border-left: 5px solid blue;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 5px 7px #888888;
+    }
+    </style>
     <script type="text/javascript">
-        function submitForm() {
+        function submitForm1() {
             var num1 = document.getElementById("num11").value;
+            var num2 = document.getElementById("num12").value;
+            var url = "/v1/add/" + num1 + "/" + num2;
+            window.location.href = url;
+            return false; // Prevent actual form submission
+        }
+
+        function submitForm2() {
+            var num1 = document.getElementById("num21").value;
             var num2 = document.getElementById("num22").value;
-            var url = "/add/" + num1 + "/" + num2;
+            var url = "/v2/add?num1=" + num1 + "&num2=" + num2;
             window.location.href = url;
             return false; // Prevent actual form submission
         }
@@ -16,7 +33,7 @@
 <body>
     <h1>Welcome to the Home Page</h1>
 
-    <form action="/processForm" method="get">
+    <form class="blueLeftBorder" action="/processForm" method="get">
         <label for="num1">Number 1:</label>
         <input type="number" id="num1" name="num1" required>
         <br>
@@ -26,9 +43,19 @@
         <input type="submit" value="Add">
     </form>
 
-    <form onsubmit="return submitForm();">
+    <form class="blueLeftBorder" onsubmit="return submitForm1();">
         <label for="num1">Number 1:</label>
         <input type="number" id="num11" name="num1" required>
+        <br>
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num12" name="num2" required>
+        <br>
+        <input type="submit" value="Add">
+    </form>
+
+    <form class="blueLeftBorder" onsubmit="return submitForm2();">
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num21" name="num1" required>
         <br>
         <label for="num2">Number 2:</label>
         <input type="number" id="num22" name="num2" required>

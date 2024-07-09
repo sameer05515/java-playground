@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/add/*")
-public class AddNumbersServlet extends HttpServlet {
+@WebServlet("/v1/add/*")
+public class AddNumbersServletV1 extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -49,7 +49,7 @@ public class AddNumbersServlet extends HttpServlet {
         
         // Write the result as HTML
         out.println("<html><body>");
-        out.println("<h1>Sum: " + sum + "</h1>");
+        out.println("<h1>Sum from V1: " + sum + "</h1>");
         out.println("</body></html>");
     }
 }

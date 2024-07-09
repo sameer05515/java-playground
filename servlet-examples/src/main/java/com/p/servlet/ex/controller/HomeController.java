@@ -16,6 +16,6 @@ public class HomeController {
     @GetMapping("/processForm")
     public String processForm(@RequestParam int num1, @RequestParam int num2, RedirectAttributes redirectAttributes) {
         // Redirect to the add URL with the numbers as path variables
-        return "redirect:/add/" + num1 + "/" + num2;
+        return "redirect:/v1/add/" + num1 + "/" + num2;
     }
 }
