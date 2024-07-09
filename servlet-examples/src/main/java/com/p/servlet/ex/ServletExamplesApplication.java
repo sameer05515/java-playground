@@ -16,7 +16,8 @@ public class ServletExamplesApplication {
 
 	@Bean
 	public ServletRegistrationBean<AddNumbersServlet> addNumbersServletRegistration() {
-		ServletRegistrationBean<AddNumbersServlet> registrationBean = new ServletRegistrationBean<>(new AddNumbersServlet(), "/add/*");
+		ServletRegistrationBean<AddNumbersServlet> registrationBean
+				= new ServletRegistrationBean<>(new AddNumbersServlet(), "/add/*");
 		return registrationBean;
 	}
 
