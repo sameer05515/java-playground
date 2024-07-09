@@ -34,6 +34,7 @@
     <h1>Welcome to the Home Page</h1>
 
     <form class="blueLeftBorder" action="/processForm" method="get">
+        <h2> Add, v1 using forward </h2>
         <label for="num1">Number 1:</label>
         <input type="number" id="num1" name="num1" required>
         <br>
@@ -44,6 +45,7 @@
     </form>
 
     <form class="blueLeftBorder" onsubmit="return submitForm1();">
+        <h2> Add, v1 </h2>
         <label for="num1">Number 1:</label>
         <input type="number" id="num11" name="num1" required>
         <br>
@@ -54,6 +56,7 @@
     </form>
 
     <form class="blueLeftBorder" onsubmit="return submitForm2();">
+        <h2> Add, v2 </h2>
         <label for="num1">Number 1:</label>
         <input type="number" id="num21" name="num1" required>
         <br>
