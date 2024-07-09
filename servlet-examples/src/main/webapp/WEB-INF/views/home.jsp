@@ -14,17 +14,19 @@
     </style>
     <script type="text/javascript">
         function submitForm1() {
-            var num1 = document.getElementById("num11").value;
-            var num2 = document.getElementById("num12").value;
-            var url = "/v1/add/" + num1 + "/" + num2;
+            const num1 = document.getElementById("num11").value;
+            const num2 = document.getElementById("num12").value;
+            const url = "/v1/add/" + num1 + "/" + num2;
+            console.log(url);
             window.location.href = url;
             return false; // Prevent actual form submission
         }
 
         function submitForm2() {
-            var num1 = document.getElementById("num21").value;
-            var num2 = document.getElementById("num22").value;
-            var url = "/v2/add?num1=" + num1 + "&num2=" + num2;
+            const num1 = document.getElementById("num21").value;
+            const num2 = document.getElementById("num22").value;
+            const url = "/v2/add?num1=" + num1 + "&num2=" + num2;
+            console.log(url);
             window.location.href = url;
             return false; // Prevent actual form submission
         }
