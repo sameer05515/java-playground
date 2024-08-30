@@ -1,6 +1,6 @@
 package com.coding.practice.codes.stringOperations;
 
-import com.coding.practice.codes.stringOperations.common.InvalidInputException;
+import com.coding.practice.codes.common.InvalidInputException;
 
 import java.util.HashMap;
 import java.util.Map;

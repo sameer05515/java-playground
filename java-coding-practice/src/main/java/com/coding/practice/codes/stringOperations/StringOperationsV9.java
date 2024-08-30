@@ -1,5 +1,6 @@
 package com.coding.practice.codes.stringOperations;
 
+import com.coding.practice.codes.common.StringOperation;
 import com.coding.practice.codes.common.InvalidInputException;
 
 import java.util.Arrays;
@@ -8,50 +9,50 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public class StringOperationsV8 {
+public class StringOperationsV9 {
 
     // Supplier to create InvalidInputException with a consistent message
     private static final Supplier<InvalidInputException> invalidInputExceptionSupplier =
             () -> new InvalidInputException("Input string is null or empty");
 
     // Define StringOperations as functional interfaces for various string manipulations
-    private static final StringOperation toUpperCase = input ->
+    private static final StringOperation<String> toUpperCase = input ->
             input.map(String::toUpperCase)
                     .map(s -> "'" + s + "'")
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation toLowerCase = input ->
+    private static final StringOperation<String> toLowerCase = input ->
             input.map(String::toLowerCase)
                     .map(s -> "'" + s + "'")
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation noOfCharacter = input ->
+    private static final StringOperation<String> noOfCharacter = input ->
             input.map(s -> String.valueOf(s.length()))
                     .map(s -> "'" + s + "'")
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation reverseString = input ->
+    private static final StringOperation<String> reverseString = input ->
             input.map(s -> s.chars()
                             .mapToObj(c -> String.valueOf((char) c))
                             .reduce("", (acc, c) -> c + acc))
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation replaceAWithZ = input ->
+    private static final StringOperation<String> replaceAWithZ = input ->
             input.map(s -> s.replace("a", "z"))
                     .map(s -> "'" + s + "'")
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation extractIndex1To3 = input ->
+    private static final StringOperation<String> extractIndex1To3 = input ->
             input.map(s -> s.length() >= 3 ? s.substring(1, 3) : s)
                     .map(s -> "'" + s + "'")
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation appendString = input ->
+    private static final StringOperation<String> appendString = input ->
             input.map(s -> s + "ef")
                     .map(s -> "'" + s + "'")
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation getFrequency = input -> input.map(s -> {
+    private static final StringOperation<String> getFrequency = input -> input.map(s -> {
                 // Create a frequency map using Collectors
                 Map<Character, Long> frequencyMap = s.trim().chars()
                         .filter(c -> !Character.isWhitespace(c))
@@ -67,7 +68,7 @@ public class StringOperationsV8 {
             })
             .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation palindromeResult = input ->
+    private static final StringOperation<String> palindromeResult = input ->
             input.map(s -> {
                         char[] characters = s.toCharArray();
                         int length = characters.length;
@@ -80,15 +81,15 @@ public class StringOperationsV8 {
                     })
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation getTotalLineNumbers = input ->
+    private static final StringOperation<String> getTotalLineNumbers = input ->
             input.map(s -> s.split("\\n").length + "")
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation normalizeString = input ->
+    private static final StringOperation<String> normalizeString = input ->
             input.map(s -> s.replaceAll("[\\W_]", "").toLowerCase())
                     .orElseThrow(invalidInputExceptionSupplier);
 
-    private static final StringOperation isAnagram = input -> input
+    private static final StringOperation<String> isAnagram = input -> input
             .filter(s -> !s.trim().isEmpty() && s.split(",").length == 2)
             .map(s -> Arrays.asList(s.split(",")))
             .map(list -> isAnagram(list.get(0), list.get(1)) ? " are anagram" : "are not anagram")
@@ -103,7 +104,7 @@ public class StringOperationsV8 {
                                 .collect(Collectors.groupingBy(c -> c, Collectors.counting())));
     }
 
-    private static void executeTest(String str) throws InvalidInputException {
+    private static void executeTest(String str) throws com.coding.practice.codes.common.InvalidInputException {
         Optional<String> sampleString = Optional.ofNullable(str);
 
         System.out.println(toUpperCase.performWithTitle("Post Capitalization: ", str));
@@ -140,18 +141,5 @@ public class StringOperationsV8 {
         }
     }
 
-    @FunctionalInterface
-    private interface StringOperation {
-        String perform(Optional<String> input) throws InvalidInputException;
 
-        default String performWithTitle(String title, String input) throws InvalidInputException {
-            if (title != null) {
-                System.out.print(title + "\t\t");
-            }
-            if (input == null || input.isEmpty()) {
-                throw new InvalidInputException("Input is missing or empty");
-            }
-            return perform(Optional.of(input));
-        }
-    }
 }
