@@ -1,7 +1,8 @@
 package com.coding.practice.codes.stringOperations;
 
-import com.coding.practice.codes.stringOperations.common.InvalidInputException;
+import com.coding.practice.codes.common.InvalidInputException;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -79,6 +80,29 @@ public class StringOperationsV8 {
                     })
                     .orElseThrow(invalidInputExceptionSupplier);
 
+    private static final StringOperation getTotalLineNumbers = input ->
+            input.map(s -> s.split("\\n").length + "")
+                    .orElseThrow(invalidInputExceptionSupplier);
+
+    private static final StringOperation normalizeString = input ->
+            input.map(s -> s.replaceAll("[\\W_]", "").toLowerCase())
+                    .orElseThrow(invalidInputExceptionSupplier);
+
+    private static final StringOperation isAnagram = input -> input
+            .filter(s -> !s.trim().isEmpty() && s.split(",").length == 2)
+            .map(s -> Arrays.asList(s.split(",")))
+            .map(list -> isAnagram(list.get(0), list.get(1)) ? " are anagram" : "are not anagram")
+            .orElseThrow(invalidInputExceptionSupplier);
+
+    public static boolean isAnagram(String s1, String s2) {
+        return (s1 != null && s2 != null) &&
+                s1.trim().length() == s2.trim().length() &&
+                s1.chars().mapToObj(c -> (char) c)
+                        .collect(Collectors.groupingBy(c -> c, Collectors.counting()))
+                        .equals(s2.chars().mapToObj(c -> (char) c)
+                                .collect(Collectors.groupingBy(c -> c, Collectors.counting())));
+    }
+
     private static void executeTest(String str) throws InvalidInputException {
         Optional<String> sampleString = Optional.ofNullable(str);
 
@@ -91,10 +115,18 @@ public class StringOperationsV8 {
         System.out.println("Extract substring 1-3: " + extractIndex1To3.perform(Optional.ofNullable(str)));
         System.out.println("Append string: " + appendString.perform(Optional.ofNullable(str)));
         System.out.println("Character frequency: " + getFrequency.perform(Optional.ofNullable(str)));
+        System.out.println(getTotalLineNumbers.performWithTitle(
+                "Split lines by new-line character and return total no of lines: ", str));
+        System.out.println(normalizeString.performWithTitle(
+                "method that removes spaces, punctuation, and capitalization from a string: ", str));
+
+        System.out.println(isAnagram.performWithTitle("listen and silent ", "silent,listen"));
+        System.out.println(isAnagram.performWithTitle("earth and heaven ", "earth,heaven"));
     }
 
     public static void main(String[] args) {
-        String[] inputs = {"Premendra Kumar", "abba", null, ""};
+        String[] inputs = {"Premendra Kumar", "abba", "Hello world\nThis is a sample text\nJava 8 is powerful", null, "",
+                "A man, a plan, a canal, Panama", "Able was I ere I saw Elba"};
         for (String input : inputs) {
             try {
                 System.out.println("=====================\nStarting test: '" + input + "'");
