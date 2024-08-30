@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 /**
  * A sample controller to demonstrate the usage of ResponseMapper.
  */
@@ -16,6 +18,7 @@ public class SampleController {
     @GetMapping("/success")
     public ResponseEntity<StandardResponse<int[]>> getSuccessResponse() {
         int[] data = {1, 2, 3, 4, 5};
+        System.out.println("Request aaya!!: "+new Date());
         return ResponseMapper.createSuccessResponse(data, HttpStatus.OK);
     }
 
