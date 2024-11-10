@@ -11,8 +11,8 @@ public class DurationCalculatorV1 {
 
     public static void main(String[] args) {
         // Durations for the given date ranges
-        Map<String, Integer> duration1 = Logic.calculateDuration("01 Sep 2009", "28 Feb 2011");
-        Map<String, Integer> duration2 = Logic.calculateDuration("22 Mar 2011", "30 Apr 2012");
+        Map<String, Integer> duration1 = LogicV1.calculateDuration("01 Sep 2009", "28 Feb 2011");
+        Map<String, Integer> duration2 = LogicV1.calculateDuration("22 Mar 2011", "30 Apr 2012");
 
         // Extracting individual results
         int duration1Months = duration1.get("durationMonths");
@@ -31,7 +31,7 @@ public class DurationCalculatorV1 {
     }
 }
 
-class Logic{
+class LogicV1{
     // Method to calculate duration in months and days between two dates
     public static Map<String, Integer> calculateDuration(String startDate, String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
