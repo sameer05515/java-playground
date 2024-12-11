@@ -2,15 +2,15 @@ package com.coding.practice.engineering.digest.collection.tutorials;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public class Main {
   public static void main(String[] args) {
-    List<Integer> list = new ArrayList<>();
+    List<Integer> list = new CopyOnWriteArrayList<>();
     list.add(1);
     list.add(2);
     list.add(3);
@@ -19,14 +19,7 @@ public class Main {
     list.add(1);
     //    Collections.sort(list);
     //    list.sort(null);
-    Collections.sort(
-        list,
-        new Comparator<Integer>() {
-          @Override
-          public int compare(Integer o1, Integer o2) {
-            return o2 - o1;
-          }
-        });
+    Collections.sort(list, (o1, o2) -> o2 - o1);
     //    System.out.println(list);
 
     List<Student> students = new ArrayList<>();
