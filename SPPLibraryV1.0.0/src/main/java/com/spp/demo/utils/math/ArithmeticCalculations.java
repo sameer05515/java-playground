@@ -1,6 +1,6 @@
-package com.spp.demo.utils;
+package com.spp.demo.utils.math;
 
-public class ArithmeticUtils {
+public class ArithmeticCalculations {
 
   public static int add(int a, int b) {
     validateInputs(a, b);
