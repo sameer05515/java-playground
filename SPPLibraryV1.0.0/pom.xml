@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.spp.demo</groupId>
-    <artifactId>SPPLibraryV1.0.0</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>spp-arithmetic-utils</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>Arithmetic Utilities</name>
     <description>A utility library for arithmetic operations with validation</description>
@@ -44,6 +44,7 @@
     </dependencies>
 
     <build>
+        <finalName>spp-arithmetic-utils</finalName>
         <plugins>
             <!-- Compiler Plugin to ensure Java 8+ compatibility -->
             <plugin>
