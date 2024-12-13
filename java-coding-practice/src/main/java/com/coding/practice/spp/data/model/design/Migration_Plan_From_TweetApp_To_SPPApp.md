@@ -13,4 +13,9 @@
 
 ---
 
+- [`Gromming in Progress`]: Once a new Link, Topic etc created, an associated subtask (or a `virtual` task, whichever
+  finalized post grooming-done ) should be created. And this task's status can be used to show current status of
+  publication for the Node.
+    - <span style="color:red">This idea need to be validated, before creation of a dedicated details page</span>
+
 # Migration Plan
