@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
    * @return A StandardResponse containing the error message with HTTP 400 (Bad Request) status.
    */
   @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<StandardResponse<Object>> handleIllegalArgumentException(
+  public ResponseEntity<StandardResponse<String>> handleIllegalArgumentException(
       IllegalArgumentException ex) {
 
     logger.error("IllegalArgumentException occurred: {}", ex.getMessage(), ex);
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
    * @return A StandardResponse containing the error message with HTTP 404 (Not Found) status.
    */
   @ExceptionHandler(NoSuchElementException.class)
-  public ResponseEntity<StandardResponse<Object>> handleNoSuchElementException(
+  public ResponseEntity<StandardResponse<String>> handleNoSuchElementException(
       NoSuchElementException ex) {
 
     logger.warn("NoSuchElementException occurred: {}", ex.getMessage(), ex);
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
    *     Server Error) status.
    */
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<StandardResponse<Object>> handleGenericException(Exception ex) {
+  public ResponseEntity<StandardResponse<String>> handleGenericException(Exception ex) {
 
     logger.error("Unhandled exception occurred: {}", ex.getMessage(), ex);
     return ResponseMapper.createErrorResponse(
