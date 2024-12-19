@@ -1,7 +1,11 @@
+# Getting Started: To add unit testing and coverage capability
+
 # Getting Started: To add integration between spring-boot and swagger-ui
 
 This application uses `springdoc-openapi v2.7.0` java library that helps to automate the generation of API documentation
 using spring boot projects.
+
+[springdoc-openapi documentation link](https://springdoc.org/#getting-started)
 
 For the integration between spring-boot and swagger-ui, add the library to the list of your project dependencies (No
 additional configuration is needed)
