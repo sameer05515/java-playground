@@ -61,6 +61,11 @@ public class ResponseMapper {
     return buildResponse("error", message + ": " + exception.getMessage(), null, status);
   }
 
+  public static <T> ResponseEntity<StandardResponse<T>> createErrorResponse(
+      String message, T data, HttpStatus status, Exception exception) {
+    return buildResponse("error", message + ": " + exception.getMessage(), data, status);
+  }
+
   /**
    * Builds a standardized response.
    *
