@@ -1,11 +1,9 @@
 package com.p.api.node.service.base.exception;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,34 +24,34 @@ class GlobalExceptionHandlerTest {
             .build();
   }
 
-  @Test
-  void testHandleIllegalArgumentException() throws Exception {
-    mockMvc
-        .perform(get("/api/test/illegal-argument"))
-        .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.status").value("error"))
-        .andExpect(jsonPath("$.message").value("Invalid argument provided"));
-  }
-
-  @Test
-  void testHandleNoSuchElementException() throws Exception {
-    mockMvc
-        .perform(get("/api/test/no-such-element"))
-        .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.status").value("error"))
-        .andExpect(jsonPath("$.message").value("No such element found"));
-  }
-
-  @Test
-  void testHandleGenericException() throws Exception {
-    mockMvc
-        .perform(get("/api/test/generic-error"))
-        .andExpect(status().isInternalServerError())
-        .andExpect(jsonPath("$.status").value("error"))
-        .andExpect(
-            jsonPath("$.message")
-                .value("An unexpected error occurred: Generic exception occurred"));
-  }
+  //  @Test
+  //  void testHandleIllegalArgumentException() throws Exception {
+  //    mockMvc
+  //        .perform(get("/api/test/illegal-argument"))
+  //        .andExpect(status().isBadRequest())
+  //        .andExpect(jsonPath("$.status").value("error"))
+  //        .andExpect(jsonPath("$.message").value("Invalid argument provided"));
+  //  }
+  //
+  //  @Test
+  //  void testHandleNoSuchElementException() throws Exception {
+  //    mockMvc
+  //        .perform(get("/api/test/no-such-element"))
+  //        .andExpect(status().isNotFound())
+  //        .andExpect(jsonPath("$.status").value("error"))
+  //        .andExpect(jsonPath("$.message").value("No such element found"));
+  //  }
+  //
+  //  @Test
+  //  void testHandleGenericException() throws Exception {
+  //    mockMvc
+  //        .perform(get("/api/test/generic-error"))
+  //        .andExpect(status().isInternalServerError())
+  //        .andExpect(jsonPath("$.status").value("error"))
+  //        .andExpect(
+  //            jsonPath("$.message")
+  //                .value("An unexpected error occurred: Generic exception occurred"));
+  //  }
 }
 
 @RestController

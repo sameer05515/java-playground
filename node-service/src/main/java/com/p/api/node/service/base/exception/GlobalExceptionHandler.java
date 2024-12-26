@@ -1,8 +1,7 @@
 package com.p.api.node.service.base.exception;
 
-import com.p.api.node.service.base.response.ResponseMapper;
-import com.p.api.node.service.base.response.StandardResponse;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,6 +18,13 @@ public class GlobalExceptionHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+  @ExceptionHandler(SectionModuleException.class)
+  public ResponseEntity<String> handleSectionModuleException(SectionModuleException ex) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body(
+            Optional.ofNullable(ex.getMessage()).orElse("Unexpected exception from SectionModule"));
+  }
+
   /**
    * Handles IllegalArgumentException and returns an appropriate response.
    *
@@ -26,11 +32,14 @@ public class GlobalExceptionHandler {
    * @return A StandardResponse containing the error message with HTTP 400 (Bad Request) status.
    */
   @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<StandardResponse<String>> handleIllegalArgumentException(
-      IllegalArgumentException ex) {
+  public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
 
     logger.error("IllegalArgumentException occurred: {}", ex.getMessage(), ex);
-    return ResponseMapper.createErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    //    return ResponseMapper.createErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body(
+            Optional.ofNullable(ex.getMessage())
+                .orElse("IllegalArgumentException occurred from SectionModule"));
   }
 
   /**
@@ -40,11 +49,14 @@ public class GlobalExceptionHandler {
    * @return A StandardResponse containing the error message with HTTP 404 (Not Found) status.
    */
   @ExceptionHandler(NoSuchElementException.class)
-  public ResponseEntity<StandardResponse<String>> handleNoSuchElementException(
-      NoSuchElementException ex) {
+  public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex) {
 
     logger.warn("NoSuchElementException occurred: {}", ex.getMessage(), ex);
-    return ResponseMapper.createErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    //    return ResponseMapper.createErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body(
+            Optional.ofNullable(ex.getMessage())
+                .orElse("NoSuchElementException occurred from SectionModule"));
   }
 
   /**
@@ -55,10 +67,14 @@ public class GlobalExceptionHandler {
    *     Server Error) status.
    */
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<StandardResponse<String>> handleGenericException(Exception ex) {
+  public ResponseEntity<String> handleGenericException(Exception ex) {
 
     logger.error("Unhandled exception occurred: {}", ex.getMessage(), ex);
-    return ResponseMapper.createErrorResponse(
-        "An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    //    return ResponseMapper.createErrorResponse(
+    //        "An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body(
+            Optional.ofNullable(ex.getMessage())
+                .orElse("Unhandled exception occurred from SectionModule"));
   }
 }

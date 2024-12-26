@@ -32,6 +32,8 @@ public class NodeServiceImpl implements NodeService {
     // Update the existing node's fields based on the provided node's fields
     existingNode.setName(node.getName() != null ? node.getName() : existingNode.getName());
     existingNode.setType(node.getType() != null ? node.getType() : existingNode.getType());
+    existingNode.setMetadata(
+        node.getMetadata() != null ? node.getMetadata() : existingNode.getMetadata());
 
     // Save the updated node back to the repository
     return nodeRepository.save(existingNode);
@@ -49,5 +51,15 @@ public class NodeServiceImpl implements NodeService {
 
   public void deleteNode(String id) {
     nodeRepository.deleteById(id);
+  }
+
+  @Override
+  public List<Node> getAllNodesByMetadataKeyValue(String key, String value) {
+    return nodeRepository.findByMetadataKeyValue(key, value);
+  }
+
+  @Override
+  public List<Node> getAllNodesByType(String type) {
+    return nodeRepository.findAllByType(type);
   }
 }
