@@ -1,7 +1,9 @@
 package com.p.api.node.service.responseEntityDemo;
 
+import com.p.api.node.service.base.util.HttpStatusUtil;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -68,5 +70,20 @@ public class ResponseEntityDemoController {
   @GetMapping("/not-found")
   public ResponseEntity<String> getNotFoundResponse() {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found");
+  }
+
+  @GetMapping("getHttpStatusList")
+  public ResponseEntity<List<HttpStatus>> getHttpStatusList() {
+    return ResponseEntity.ok(HttpStatusUtil.getHttpStatusList());
+  }
+
+  @GetMapping("getHttpStatusValues")
+  public ResponseEntity<List<String>> getHttpStatusValues() {
+    return ResponseEntity.ok(HttpStatusUtil.getHttpStatusValues());
+  }
+
+  @GetMapping("/response-acc-to-status-code/{code}")
+  public ResponseEntity<String> getResponseForCode(@PathVariable int code) {
+    return ResponseEntity.status(code).body("Request processed for code: " + code);
   }
 }

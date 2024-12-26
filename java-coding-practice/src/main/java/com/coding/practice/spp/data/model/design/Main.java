@@ -1,6 +1,7 @@
 package com.coding.practice.spp.data.model.design;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -11,6 +12,7 @@ public class Main {
     list.add(3);
 
     Object[] array = list.toArray();
+    System.out.println(Arrays.toString(array));
   }
 }
 
