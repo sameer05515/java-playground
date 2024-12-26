@@ -1,3 +1,52 @@
+# Commonly used HTTP Status codes
+
+Here’s a list of commonly used HTTP status codes grouped by category:
+
+### **1xx: Informational**
+
+- **100 Continue**: Indicates that the client should continue with its request.
+- **101 Switching Protocols**: The server switches to the protocol requested by the client.
+
+---
+
+### **2xx: Success**
+
+- **200 OK**: The request was successful.
+- **201 Created**: The request was successful, and a resource was created.
+- **202 Accepted**: The request has been accepted for processing but is not yet completed.
+- **204 No Content**: The request was successful, but there is no content to return.
+
+---
+
+### **3xx: Redirection**
+
+- **301 Moved Permanently**: The resource has been moved permanently to a new URL.
+- **302 Found**: The resource is temporarily located at a different URL.
+- **304 Not Modified**: The resource has not been modified; the client can use cached data.
+
+---
+
+### **4xx: Client Errors**
+
+- **400 Bad Request**: The server could not understand the request due to invalid syntax.
+- **401 Unauthorized**: Authentication is required and has failed or not been provided.
+- **403 Forbidden**: The client does not have permission to access the resource.
+- **404 Not Found**: The requested resource was not found on the server.
+- **405 Method Not Allowed**: The HTTP method used is not allowed for the resource.
+- **429 Too Many Requests**: The client has sent too many requests in a given time.
+
+---
+
+### **5xx: Server Errors**
+
+- **500 Internal Server Error**: A generic server error occurred.
+- **501 Not Implemented**: The server does not support the requested functionality.
+- **502 Bad Gateway**: The server received an invalid response from an upstream server.
+- **503 Service Unavailable**: The server is currently unavailable (e.g., due to maintenance).
+- **504 Gateway Timeout**: The server did not receive a timely response from an upstream server.
+
+These codes cover most common use cases in REST APIs, web applications, and general HTTP communication.
+
 # please create a controller class to demonstrate use of various methods of org.springframework.http.ResponseEntity
 
 Here is a demonstration of a Spring Boot controller showcasing various methods of
@@ -106,3 +155,7 @@ Each method corresponds to a different endpoint. You can test them using `curl`,
 - **POST `/response-demo/created`** → Returns a 201 Created with a `Location` header.
 
 Let me know if you'd like to expand on any part!
+
+# Reference
+
+- [**HTTP response status codes**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
