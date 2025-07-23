@@ -13,4 +13,8 @@ public interface NodeService {
   public Node getNodeById(String id);
 
   public void deleteNode(String id);
+
+  public List<Node> getAllNodesByMetadataKeyValue(String key, String value);
+
+  public List<Node> getAllNodesByType(String type);
 }
