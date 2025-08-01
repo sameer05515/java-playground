@@ -4,6 +4,7 @@ import com.prem.mongo.playground.entity.Student;
 import com.prem.mongo.playground.repository.StudentRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -66,6 +67,16 @@ public class StudentService {
             Sort.Order.desc("mail"), Sort.Order.asc("name"));
 
     return studentRepository.findAll(sort);
+  }
+
+  public Page<Student> getStudentsSortedPaginated(int page, int size) {
+
+    Sort sort =
+        Sort.by(
+            //            Sort.Order.asc("name"),
+            Sort.Order.desc("mail"), Sort.Order.asc("name"));
+    Pageable pageable = PageRequest.of(page, size, sort);
+    return studentRepository.findAll(pageable);
   }
 
   public List<Student> byDepartmentName(String deptName) {
