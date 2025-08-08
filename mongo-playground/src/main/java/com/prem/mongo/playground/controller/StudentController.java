@@ -4,6 +4,7 @@ import com.prem.mongo.playground.entity.Student;
 import com.prem.mongo.playground.service.StudentService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,6 +74,12 @@ public class StudentController {
   @GetMapping("/allWithSortingNameAscEmailDesc")
   public List<Student> allWithSortingNameAscEmailDesc() {
     return studentService.allWithSortingNameAscEmailDesc();
+  }
+
+  @GetMapping("/getStudentsSortedPaginated")
+  public Page<Student> getStudentsSortedPaginated(
+      @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "2") int size) {
+    return studentService.getStudentsSortedPaginated(pageNo - 1, size);
   }
 
   @GetMapping("/byDepartmentName")
