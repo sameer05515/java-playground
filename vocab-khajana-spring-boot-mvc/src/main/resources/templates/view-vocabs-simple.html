@@ -1,0 +1,7 @@
+<!doctype html><html xmlns:th="http://www.thymeleaf.org"><head><title>Vocabulary Simple</title><style>
+body{width:650px;margin:0 auto;background:green;color:#fff;font:14px sans-serif}.planet{margin:10px 0;padding:12px 20px;border:1px solid #fff}.word{font-size:20px;font-weight:bold}a{color:#fff}
+</style></head><body><a th:href="@{/}">Home</a> | <a th:href="@{/viewVocabs}">Detailed</a>
+<div th:each="entry,stat:${words}" class="planet"><div class="word"><span th:text="${stat.index+1}">1</span> : <span th:text="${entry.word}">word</span> (<span th:text="${entry.type}">verb</span>)</div>
+<span th:each="m,ms:${entry.meanings}"><span th:text="${m.text}">meaning</span><span th:if="${!ms.last}">, </span></span>
+<span th:if="${!entry.examples.isEmpty()}"> ( <span th:each="e,es:${entry.examples}"><span th:text="${e.text}">example</span><span th:if="${!es.last}">, </span></span> )</span></div>
+<p th:text="${words.size()}">0</p></body></html>

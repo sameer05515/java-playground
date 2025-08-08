@@ -1,0 +1,6 @@
+<!doctype html><html xmlns:th="http://www.thymeleaf.org"><head><title>Add vocabulary</title></head><body>
+<h1>Add vocabulary</h1><form method="post" th:action="@{/add-vocab}">
+<label>Word <input name="word" required></label><br><label>Type <input name="type" required></label><br>
+<label>Meanings<br><textarea name="meanings" rows="5" cols="70" placeholder="one meaning per line"></textarea></label><br>
+<label>Examples<br><textarea name="examples" rows="6" cols="70" placeholder="one example per line"></textarea></label><br>
+<button type="submit">Save</button></form><a th:href="@{/}">Home</a></body></html>

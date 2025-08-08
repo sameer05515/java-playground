@@ -1,0 +1,102 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Vocabulary Exercise</title>
+    <style>
+      body {
+        width: 700px;
+        margin: 0 auto;
+        background: green;
+        color: #fff;
+        font: 12px sans-serif;
+      }
+      .htmlClass {
+        padding: 8px;
+        border: 1px solid blue;
+        margin-bottom: 8px;
+      }
+      .exerciseHeader {
+        font: 24px Verdana;
+        cursor: pointer;
+      }
+      .commandHeader {
+        padding: 6px;
+        border: 1px solid red;
+        cursor: pointer;
+      }
+      .planet {
+        margin: 10px 0;
+        padding: 20px;
+        border: 1px solid #fff;
+      }
+      .hidden {
+        display: none;
+      }
+      a {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <a th:href="@{/}">Home</a>
+    <h2>Vocabulary exercise</h2>
+    <div>
+      <button id="prev">Previous</button><button id="next">Next</button
+      ><button id="next50">Next 50</button>
+      <label>Offset <input id="txtOffset" th:value="${offset}" /></label
+      ><label>Count <input id="txtCount" th:value="${count}" /></label
+      ><button id="settings">Change settings</button>
+    </div>
+    <div id="status" class="commandHeader">Current Status</div>
+    <div
+      th:each="entry,stat:${words}"
+      class="exercise-container"
+      th:attr="data-index=${stat.index}"
+    >
+      <div class="exerciseHeader" th:text="${entry.word}">word</div>
+      <div class="htmlClass exercise">
+        <div class="planet">
+          <h1>
+            <span th:text="${stat.index+1}">1</span> :
+            <span th:text="${entry.word}">word</span>
+          </h1>
+          <div>Type: <b th:text="${entry.type}">verb</b></div>
+          <h3>Meanings</h3>
+          <div th:each="m,ms:${entry.meanings}">
+            <span th:text="${ms.index + 1 + ' : ' + m.text}">meaning</span>
+          </div>
+          <h3>Examples</h3>
+          <div th:each="e,es:${entry.examples}">
+            <span th:text="${es.index + 1 + ' : ' + e.text}">example</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const nodes = [...document.querySelectorAll(".exercise-container")];
+      let current = 0;
+      function show(i) {
+        if (!nodes.length) return;
+        current = (i + nodes.length) % nodes.length;
+        nodes.forEach((n, k) => n.classList.toggle("hidden", k !== current));
+        document.getElementById("status").textContent =
+          "Word " + (current + 1) + " / " + nodes.length;
+      }
+      document.getElementById("next").onclick = () => show(current + 1);
+      document.getElementById("prev").onclick = () => show(current - 1);
+      document.getElementById("next50").onclick = () => show(current + 50);
+      document.getElementById("settings").onclick = () =>
+        (location.href =
+          "?offset=" +
+          encodeURIComponent(document.getElementById("txtOffset").value) +
+          "&count=" +
+          encodeURIComponent(document.getElementById("txtCount").value));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "n") show(current + 1);
+        if (e.key === "p") show(current - 1);
+        if (e.key === "l") show(current + 50);
+      });
+      show(0);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+<!doctype html><html><head><title>Vocabulary Simple</title><style>
+body{width:650px;margin:0 auto;background:green;color:#fff;font:14px sans-serif}.planet{margin:10px 0;padding:12px 20px;border:1px solid #fff}.word{font-size:20px;font-weight:bold}a{color:#fff}
+</style></head><body><a href="/">Home</a> | <a href="/viewVocabs">Detailed</a>
+<% words.forEach((entry, i) => { %><div class="planet"><div class="word"><%= i + 1 %> : <%= entry.word %> (<%= entry.type %>)</div>
+<% entry.meanings.forEach((m, j) => { %><span><%= m.text %><%= j < entry.meanings.length - 1 ? ', ' : '' %></span><% }) %>
+<% if (entry.examples.length) { %> ( <% entry.examples.forEach((e, j) => { %><span><%= e.text %><%= j < entry.examples.length - 1 ? ', ' : '' %></span><% }) %> )<% } %></div><% }) %><p><%= words.length %></p></body></html>

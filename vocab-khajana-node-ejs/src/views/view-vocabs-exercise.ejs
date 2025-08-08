@@ -1,0 +1,19 @@
+<!doctype html><html><head><title>Vocabulary Exercise</title><style>
+body{width:700px;margin:0 auto;background:green;color:#fff;font:12px sans-serif}.htmlClass{padding:8px;border:1px solid blue;margin-bottom:8px}.exerciseHeader{font:24px Verdana;cursor:pointer}.commandHeader{padding:6px;border:1px solid red;cursor:pointer}.planet{margin:10px 0;padding:20px;border:1px solid #fff}.hidden{display:none}a{color:#fff}
+</style></head><body>
+<a href="/">Home</a><h2>Vocabulary exercise</h2>
+<div><button id="prev">Previous</button><button id="next">Next</button><button id="next50">Next 50</button>
+<label>Offset <input id="txtOffset" value="<%= offset %>"></label><label>Count <input id="txtCount" value="<%= count %>"></label><button id="settings">Change settings</button></div>
+<div id="status" class="commandHeader">Current Status</div>
+<% words.forEach((entry, i) => { %><div class="exercise-container" data-index="<%= i %>">
+<div class="exerciseHeader"><%= entry.word %></div><div class="htmlClass exercise"><div class="planet"><h1><%= i + 1 %> : <%= entry.word %></h1>
+<div>Type: <b><%= entry.type %></b></div><h3>Meanings</h3>
+<% entry.meanings.forEach((m,j) => { %><div><%= j + 1 %> : <%= m.text %></div><% }) %><h3>Examples</h3>
+<% entry.examples.forEach((e,j) => { %><div><%= j + 1 %> : <%= e.text %></div><% }) %></div></div></div><% }) %>
+<script>
+const nodes=[...document.querySelectorAll('.exercise-container')];let current=0;
+function show(i){if(!nodes.length)return;current=(i+nodes.length)%nodes.length;nodes.forEach((n,k)=>n.classList.toggle('hidden',k!==current));document.getElementById('status').textContent='Word '+(current+1)+' / '+nodes.length;}
+document.getElementById('next').onclick=()=>show(current+1);document.getElementById('prev').onclick=()=>show(current-1);document.getElementById('next50').onclick=()=>show(current+50);
+document.getElementById('settings').onclick=()=>location.href='?offset='+encodeURIComponent(document.getElementById('txtOffset').value)+'&count='+encodeURIComponent(document.getElementById('txtCount').value);
+document.addEventListener('keydown',e=>{if(e.key==='n')show(current+1);if(e.key==='p')show(current-1);if(e.key==='l')show(current+50)});show(0);
+</script></body></html>
