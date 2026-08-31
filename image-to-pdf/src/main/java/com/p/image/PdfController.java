@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+@CrossOrigin(
+    origins = "http://localhost:4200"
+)
 @RestController
 @RequestMapping("/api/pdf")
 public class PdfController {
