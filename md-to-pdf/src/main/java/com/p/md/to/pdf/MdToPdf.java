@@ -87,16 +87,22 @@ public class MdToPdf {
 
         String htmlContent = renderer.render(document);
 
+        htmlContent = htmlContent
+        .replace("<br>", "<br />")
+        .replace("<hr>", "<hr />")
+        .replaceAll("<img([^>]*?)(?<!/)>", "<img$1 />");
+
         // -------------------------------------------------
         // 4. Create complete HTML document
         // -------------------------------------------------
 
         String html = """
         <!DOCTYPE html>
-        <html>
+        <html xmlns="http://www.w3.org/1999/xhtml">
+
         <head>
 
-            <meta charset="UTF-8">
+            <meta charset="UTF-8" />
 
             <style>
 
@@ -201,11 +207,12 @@ public class MdToPdf {
 
         <body>
 
-        %s
+        """ + htmlContent + """
 
         </body>
+
         </html>
-        """.replace("%s", htmlContent);
+        """;
 
         // -------------------------------------------------
         // 5. HTML -> PDF
