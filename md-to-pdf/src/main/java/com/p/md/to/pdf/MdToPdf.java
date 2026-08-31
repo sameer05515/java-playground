@@ -92,120 +92,120 @@ public class MdToPdf {
         // -------------------------------------------------
 
         String html = """
-                <!DOCTYPE html>
-                <html>
-                <head>
+        <!DOCTYPE html>
+        <html>
+        <head>
 
-                    <meta charset="UTF-8">
+            <meta charset="UTF-8">
 
-                    <style>
+            <style>
 
-                        @page {
-                            size: A4;
-                            margin: 25mm 20mm 25mm 20mm;
-                        }
+                @page {
+                    size: A4;
+                    margin: 25mm 20mm 25mm 20mm;
+                }
 
-                        body {
-                            font-family: Arial, Helvetica, sans-serif;
-                            font-size: 14px;
-                            line-height: 1.6;
-                            color: #222;
-                        }
+                body {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    color: #222;
+                }
 
-                        h1 {
-                            font-size: 28px;
-                            border-bottom: 2px solid #333;
-                            padding-bottom: 8px;
-                            margin-bottom: 20px;
-                        }
+                h1 {
+                    font-size: 28px;
+                    border-bottom: 2px solid #333;
+                    padding-bottom: 8px;
+                    margin-bottom: 20px;
+                }
 
-                        h2 {
-                            font-size: 22px;
-                            margin-top: 30px;
-                        }
+                h2 {
+                    font-size: 22px;
+                    margin-top: 30px;
+                }
 
-                        h3 {
-                            font-size: 18px;
-                            margin-top: 25px;
-                        }
+                h3 {
+                    font-size: 18px;
+                    margin-top: 25px;
+                }
 
-                        p {
-                            margin: 10px 0;
-                        }
+                p {
+                    margin: 10px 0;
+                }
 
-                        ul,
-                        ol {
-                            margin: 10px 0 10px 25px;
-                        }
+                ul,
+                ol {
+                    margin: 10px 0 10px 25px;
+                }
 
-                        li {
-                            margin-bottom: 5px;
-                        }
+                li {
+                    margin-bottom: 5px;
+                }
 
-                        blockquote {
-                            border-left: 4px solid #999;
-                            padding-left: 15px;
-                            color: #555;
-                            margin-left: 0;
-                        }
+                blockquote {
+                    border-left: 4px solid #999;
+                    padding-left: 15px;
+                    color: #555;
+                    margin-left: 0;
+                }
 
-                        code {
-                            background: #f4f4f4;
-                            padding: 2px 5px;
-                            border-radius: 3px;
-                            font-family: monospace;
-                        }
+                code {
+                    background: #f4f4f4;
+                    padding: 2px 5px;
+                    border-radius: 3px;
+                    font-family: monospace;
+                }
 
-                        pre {
-                            background: #f4f4f4;
-                            padding: 15px;
-                            border-radius: 5px;
-                            white-space: pre-wrap;
-                            word-wrap: break-word;
-                        }
+                pre {
+                    background: #f4f4f4;
+                    padding: 15px;
+                    border-radius: 5px;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
 
-                        pre code {
-                            background: none;
-                            padding: 0;
-                        }
+                pre code {
+                    background: none;
+                    padding: 0;
+                }
 
-                        table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin: 20px 0;
-                        }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                }
 
-                        th,
-                        td {
-                            border: 1px solid #ccc;
-                            padding: 8px;
-                            text-align: left;
-                        }
+                th,
+                td {
+                    border: 1px solid #ccc;
+                    padding: 8px;
+                    text-align: left;
+                }
 
-                        th {
-                            background: #eee;
-                        }
+                th {
+                    background: #eee;
+                }
 
-                        img {
-                            max-width: 100%;
-                        }
+                img {
+                    max-width: 100%;
+                }
 
-                        a {
-                            color: #0645ad;
-                            text-decoration: none;
-                        }
+                a {
+                    color: #0645ad;
+                    text-decoration: none;
+                }
 
-                    </style>
+            </style>
 
-                </head>
+        </head>
 
-                <body>
+        <body>
 
-                %s
+        %s
 
-                </body>
-                </html>
-                """.formatted(htmlContent);
+        </body>
+        </html>
+        """.replace("%s", htmlContent);
 
         // -------------------------------------------------
         // 5. HTML -> PDF
