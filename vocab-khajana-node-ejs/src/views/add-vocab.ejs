@@ -1,0 +1,7 @@
+<!doctype html><html><head><title>Add vocabulary</title></head><body>
+<h1>Add vocabulary</h1>
+<% if (saved) { %><p style="color:green">Saved: <b><%= saved.word %></b> (runtime only)</p><% } %>
+<form method="post" action="/add-vocab"><label>Word <input name="word" required></label><br><label>Type <input name="type" required></label><br>
+<label>Meanings<br><textarea name="meanings" rows="5" cols="70" placeholder="one meaning per line"></textarea></label><br>
+<label>Examples<br><textarea name="examples" rows="6" cols="70" placeholder="one example per line"></textarea></label><br>
+<button type="submit">Save</button></form><a href="/">Home</a></body></html>

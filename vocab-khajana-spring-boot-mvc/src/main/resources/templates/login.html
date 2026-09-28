@@ -1,0 +1,4 @@
+<!doctype html><html xmlns:th="http://www.thymeleaf.org"><head><title>Login</title><meta charset="UTF-8"></head><body>
+<a th:href="@{/}">Vocab Khajana</a><p style="color:red" th:text="${errorMessage}"></p>
+<form method="post" th:action="@{/login}"><label>Name <input name="name"></label><br><label>Password <input type="password" name="password"></label><br><button>Login</button></form>
+<div th:each="u:${allUsers}" th:text="${u.name}"></div></body></html>

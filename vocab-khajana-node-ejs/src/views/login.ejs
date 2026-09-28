@@ -1,0 +1,4 @@
+<!doctype html><html><head><title>Login</title><meta charset="UTF-8"></head><body>
+<a href="/">Vocab Khajana</a><p style="color:red"><%= errorMessage || '' %></p>
+<form method="post" action="/login"><label>Name <input name="name"></label><br><label>Password <input type="password" name="password"></label><br><button>Login</button></form>
+<% allUsers.forEach(u => { %><div><%= u.name %></div><% }) %></body></html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Vocabulary</title>
+    <style>
+      body {
+        width: 650px;
+        margin: 0 auto;
+        background: green;
+        color: #fff;
+        font: 12px sans-serif;
+      }
+      .planet {
+        margin: 10px 0;
+        padding: 20px 20px 20px 100px;
+        border: 1px solid #fff;
+      }
+      .word {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .meaning {
+        font-size: 20px;
+      }
+      .example {
+        font-size: 18px;
+      }
+      a {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <a th:href="@{/}">Home</a> | <a th:href="@{/viewVocabsSimple}">Simple</a>
+    <div th:each="entry,stat:${words}" class="planet">
+      <div class="word">
+        <span th:text="${stat.index+1}">1</span> :
+        <span th:text="${entry.word}">word</span>
+      </div>
+      <div>Type: <b th:text="${entry.type}">verb</b></div>
+      <h3>Meanings</h3>
+      <div th:each="m,ms:${entry.meanings}" class="meaning">
+        <span th:text="${ms.index + 1 + ' : ' + m.text}">1 : meaning</span>
+      </div>
+      <h3>Examples</h3>
+      <div th:each="e,es:${entry.examples}" class="example">
+        <span th:text="${es.index + 1 + ' : ' + e.text}">1 : example</span>
+      </div>
+    </div>
+    <p th:text="${words.size()}">0</p>
+  </body>
+</html>

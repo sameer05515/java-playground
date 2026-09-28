@@ -1,0 +1,19 @@
+{
+  "name": "vocab-khajana-node-ejs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vocab Khajana migrated from Spring MVC/Thymeleaf to Node.js/Express/EJS",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "fast-xml-parser": "^5.2.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
