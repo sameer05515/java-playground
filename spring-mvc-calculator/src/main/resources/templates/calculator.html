@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spring MVC Calculator</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .calculator {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px #0001;
+            width: min(360px, 100%);
+        }
+        h2 { text-align: center; margin-top: 0; }
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: 0;
+            cursor: pointer;
+        }
+        button:hover { background: #1d4ed8; }
+        .result { color: #15803d; overflow-wrap: anywhere; }
+        .error { color: #dc2626; }
+    </style>
+</head>
+<body>
+<div class="calculator">
+    <h2>Spring MVC Calculator</h2>
+    <form th:action="@{/calculate}" method="post">
+        <label for="num1">First number</label>
+        <input id="num1" type="number" step="any" name="num1"
+               placeholder="Enter first number" th:value="${num1}" required>
+
+        <label for="operation">Operation</label>
+        <select id="operation" name="operation" required>
+            <option value="add" th:selected="${operation == 'add' or operation == null}">Addition (+)</option>
+            <option value="subtract" th:selected="${operation == 'subtract'}">Subtraction (-)</option>
+            <option value="multiply" th:selected="${operation == 'multiply'}">Multiplication (*)</option>
+            <option value="divide" th:selected="${operation == 'divide'}">Division (/)</option>
+        </select>
+
+        <label for="num2">Second number</label>
+        <input id="num2" type="number" step="any" name="num2"
+               placeholder="Enter second number" th:value="${num2}" required>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    <h3 class="result" th:if="${result != null}">
+        Result: <span th:text="${result}"></span>
+    </h3>
+    <p class="error" th:if="${error != null}" th:text="${error}"></p>
+</div>
+</body>
+</html>
