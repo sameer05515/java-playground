@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scientific Calculator V2</title>
+  <style>
+    :root { color-scheme: light; --bg:#eef2ff; --panel:#fff; --text:#172033; --muted:#64748b; --key:#f1f5f9; --border:#dbe3ef; --accent:#4f46e5; --accentText:#fff; --danger:#fee2e2; }
+    [data-theme="dark"] { color-scheme: dark; --bg:#0b1220; --panel:#151f30; --text:#e5edf8; --muted:#9fb0c7; --key:#202d40; --border:#304057; --accent:#818cf8; --accentText:#111827; --danger:#51252b; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; padding:24px; display:grid; place-items:center; background:var(--bg); color:var(--text); font-family:system-ui,-apple-system,Segoe UI,sans-serif; transition:background .2s,color .2s; }
+    .layout { width:min(100%,900px); display:grid; grid-template-columns:minmax(300px,1.25fr) minmax(250px,.75fr); gap:18px; }
+    .panel { background:var(--panel); border:1px solid var(--border); border-radius:20px; padding:22px; box-shadow:0 12px 32px #0f172a0b; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    h1 { font-size:1.25rem; margin:0; } .muted { color:var(--muted); font-size:.88rem; }
+    button { cursor:pointer; border:1px solid var(--border); border-radius:11px; background:var(--key); color:var(--text); padding:12px 8px; font-size:1rem; font-weight:600; }
+    button:hover { filter:brightness(.96); } button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+    .display { margin:20px 0 14px; padding:18px; min-height:100px; border:1px solid var(--border); border-radius:14px; background:var(--bg); }
+    #expression { min-height:22px; color:var(--muted); text-align:right; overflow-wrap:anywhere; }
+    #screen { width:100%; background:transparent; border:0; color:var(--text); font-size:2rem; text-align:right; outline:none; font-variant-numeric:tabular-nums; }
+    .keys { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; }
+    .keys button { min-height:48px; } .operator { color:var(--accent); } .equals { background:var(--accent); color:var(--accentText); border-color:transparent; }
+    .wide { grid-column:span 2; } .history-head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .history-head h2 { font-size:1.05rem; margin:0; } .history-list { padding:0; margin:14px 0 0; list-style:none; display:grid; gap:8px; max-height:470px; overflow:auto; }
+    .history-item { display:flex; justify-content:space-between; gap:10px; align-items:center; padding:10px; background:var(--key); border-radius:10px; }
+    .history-item button { border:0; padding:5px; background:transparent; text-align:right; overflow-wrap:anywhere; }
+    .history-expression { color:var(--muted); font-size:.8rem; } .history-result { font-weight:700; }
+    .empty { color:var(--muted); text-align:center; padding:30px 8px; }
+    .status { min-height:22px; color:#dc2626; margin:10px 0 0; font-size:.9rem; }
+    @media(max-width:700px) { body { padding:12px; } .layout { grid-template-columns:1fr; } .keys { gap:6px; } .panel { padding:16px; } }
+  </style>
+</head>
+<body>
+<div class="layout" id="app">
+  <main class="panel">
+    <header>
+      <div><h1>Scientific Calculator</h1><div class="muted">Spring MVC · V2</div></div>
+      <button id="themeToggle" type="button" aria-label="Toggle dark mode">🌙 Theme</button>
+    </header>
+    <div class="display">
+      <div id="expression" aria-live="polite"></div>
+      <input id="screen" type="text" inputmode="decimal" value="0" aria-label="Calculator display" autocomplete="off">
+    </div>
+    <div class="keys" id="keys">
+      <button data-action="clear">AC</button><button data-action="backspace">⌫</button><button data-action="constant" data-value="(">(</button><button data-action="constant" data-value=")">)</button><button data-action="binary" data-value="divide" class="operator">÷</button>
+      <button data-action="unary" data-value="sin">sin</button><button data-action="unary" data-value="cos">cos</button><button data-action="unary" data-value="tan">tan</button><button data-action="unary" data-value="sqrt">√</button><button data-action="binary" data-value="multiply" class="operator">×</button>
+      <button data-action="unary" data-value="log">log</button><button data-action="unary" data-value="ln">ln</button><button data-action="unary" data-value="abs">abs</button><button data-action="binary" data-value="power" class="operator">xʸ</button><button data-action="binary" data-value="subtract" class="operator">−</button>
+      <button data-action="digit" data-value="7">7</button><button data-action="digit" data-value="8">8</button><button data-action="digit" data-value="9">9</button><button data-action="unary" data-value="factorial">n!</button><button data-action="binary" data-value="add" class="operator">+</button>
+      <button data-action="digit" data-value="4">4</button><button data-action="digit" data-value="5">5</button><button data-action="digit" data-value="6">6</button><button data-action="binary" data-value="modulo" class="operator">mod</button><button data-action="constant" data-value="pi">π</button>
+      <button data-action="digit" data-value="1">1</button><button data-action="digit" data-value="2">2</button><button data-action="digit" data-value="3">3</button><button data-action="constant" data-value="e">e</button><button data-action="constant" data-value="ans">Ans</button>
+      <button data-action="digit" data-value="0" class="wide">0</button><button data-action="decimal">.</button><button data-action="sign">±</button><button data-action="equals" class="equals">=</button>
+    </div>
+    <p class="status" id="status" role="status"></p>
+    <p class="muted">Trig functions use degrees. Use the keyboard for digits, operators, Enter (=), and Backspace.</p>
+  </main>
+  <aside class="panel">
+    <div class="history-head"><h2>Calculation history</h2><button id="clearHistory" type="button">Clear</button></div>
+    <p class="muted">Saved in this browser with localStorage. It stays after refresh.</p>
+    <ul id="history" class="history-list"></ul>
+  </aside>
+</div>
+<script>
+(() => {
+  const screen = document.getElementById('screen');
+  const expression = document.getElementById('expression');
+  const status = document.getElementById('status');
+  const historyList = document.getElementById('history');
+  const HISTORY_KEY = 'spring-mvc-calculator-v2-history';
+  const THEME_KEY = 'spring-mvc-calculator-v2-theme';
+  let current = '0', previousAnswer = 0, justEvaluated = false;
+  const opSymbols = { add: '+', subtract: '−', multiply: '×', divide: '÷', modulo: 'mod', power: '^' };
+  const unaryLabels = { sqrt: '√', sin: 'sin', cos: 'cos', tan: 'tan', log: 'log', ln: 'ln', abs: 'abs', factorial: '!' };
+
+  function setScreen(value) { current = String(value); screen.value = current; }
+  function showError(message) { status.textContent = message; }
+  function clearError() { status.textContent = ''; }
+  function readHistory() {
+    try { const data = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); return Array.isArray(data) ? data : []; }
+    catch (_) { return []; }
+  }
+  function saveHistory(item) {
+    const items = [item, ...readHistory()].slice(0, 50);
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(items)); } catch (_) {}
+    renderHistory();
+  }
+  function renderHistory() {
+    const items = readHistory();
+    historyList.replaceChildren();
+    if (!items.length) {
+      const li = document.createElement('li'); li.className = 'empty'; li.textContent = 'No calculations yet'; historyList.appendChild(li); return;
+    }
+    items.forEach(item => {
+      const li = document.createElement('li'); li.className = 'history-item';
+      const text = document.createElement('div');
+      const exp = document.createElement('div'); exp.className = 'history-expression'; exp.textContent = item.expression;
+      const result = document.createElement('div'); result.className = 'history-result'; result.textContent = '= ' + item.result;
+      text.append(exp, result);
+      const reuse = document.createElement('button'); reuse.type = 'button'; reuse.textContent = 'Use'; reuse.title = 'Use this result';
+      reuse.addEventListener('click', () => { setScreen(item.result); previousAnswer = Number(item.result); expression.textContent = item.expression + ' ='; clearError(); });
+      li.append(text, reuse); historyList.appendChild(li);
+    });
+  }
+  function normalizeNumber(n) {
+    if (!Number.isFinite(n)) throw new Error('Result is outside the supported numeric range.');
+    return Number.parseFloat(n.toPrecision(12)).toString();
+  }
+  function unary(value, op) {
+    const body = { value: Number(value), operation: op };
+    return fetch('/api/calculator/unary', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) })
+      .then(async r => { const data = await r.json(); if (!r.ok) throw new Error(data.message || 'Calculation failed'); return data.result; });
+  }
+  function binary(a, b, op) {
+    const body = { first: Number(a), second: Number(b), operation: op };
+    return fetch('/api/calculator/binary', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) })
+      .then(async r => { const data = await r.json(); if (!r.ok) throw new Error(data.message || 'Calculation failed'); return data.result; });
+  }
+  function digit(value) {
+    clearError();
+    if (justEvaluated) { setScreen(value); expression.textContent = ''; justEvaluated = false; return; }
+    if (current === '0') setScreen(value); else if (current.length < 80) setScreen(current + value);
+  }
+  function append(value) {
+    clearError();
+    if (justEvaluated) { setScreen('0'); expression.textContent = ''; justEvaluated = false; }
+    if (current.length < 80) setScreen(current === '0' && value !== '.' ? value : current + value);
+  }
+  function binaryAction(op) {
+    clearError();
+    const val = Number(current);
+    if (!Number.isFinite(val)) return showError('Enter a valid number first.');
+    expression.textContent = `${current} ${opSymbols[op]}`;
+    // Hold the first operand and operation in the expression state.
+    window.__calcPending = { first: val, operation: op };
+    setScreen('0'); justEvaluated = false;
+  }
+  async function equals() {
+    clearError();
+    try {
+      const pending = window.__calcPending;
+      if (pending) {
+        const second = Number(current);
+        const result = await binary(pending.first, second, pending.operation);
+        const resultText = normalizeNumber(result);
+        const exp = `${normalizeNumber(pending.first)} ${opSymbols[pending.operation]} ${normalizeNumber(second)}`;
+        expression.textContent = exp + ' =';
+        setScreen(resultText); previousAnswer = result; justEvaluated = true;
+        saveHistory({ expression: exp, result: resultText, timestamp: Date.now() });
+        window.__calcPending = null;
+      } else {
+        const result = normalizeNumber(Number(current));
+        expression.textContent = current + ' ='; setScreen(result); previousAnswer = Number(result); justEvaluated = true;
+      }
+    } catch (e) { showError(e.message || 'Unable to calculate.'); window.__calcPending = null; }
+  }
+  async function applyUnary(op) {
+    clearError();
+    try {
+      let value;
+      if (op === 'factorial') value = Number(current);
+      else value = Number(current);
+      const result = await unary(value, op);
+      const resultText = normalizeNumber(result);
+      const exp = `${unaryLabels[op]}(${current})`;
+      expression.textContent = exp + ' ='; setScreen(resultText); previousAnswer = result; justEvaluated = true;
+      saveHistory({ expression: exp, result: resultText, timestamp: Date.now() });
+    } catch (e) { showError(e.message || 'Unable to calculate.'); }
+  }
+  document.getElementById('keys').addEventListener('click', async event => {
+    const btn = event.target.closest('button[data-action]'); if (!btn) return;
+    const { action, value } = btn.dataset;
+    if (action === 'digit') digit(value);
+    else if (action === 'decimal') { if (!current.includes('.')) append('.'); }
+    else if (action === 'constant') {
+      if (value === 'pi') setScreen(normalizeNumber(Math.PI));
+      else if (value === 'e') setScreen(normalizeNumber(Math.E));
+      else if (value === 'ans') setScreen(normalizeNumber(previousAnswer));
+      else append(value);
+      justEvaluated = false; clearError();
+    } else if (action === 'clear') { setScreen('0'); expression.textContent = ''; window.__calcPending = null; justEvaluated = false; clearError(); }
+    else if (action === 'backspace') { setScreen(current.length > 1 ? current.slice(0, -1) : '0'); clearError(); }
+    else if (action === 'sign') { if (Number(current) !== 0) setScreen(normalizeNumber(-Number(current))); }
+    else if (action === 'binary') binaryAction(value);
+    else if (action === 'unary') await applyUnary(value);
+    else if (action === 'equals') await equals();
+  });
+  screen.addEventListener('change', () => {
+    const n = Number(screen.value);
+    if (screen.value.trim() === '' || !Number.isFinite(n)) { setScreen('0'); showError('Enter a valid number.'); }
+    else { setScreen(normalizeNumber(n)); clearError(); }
+  });
+  screen.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === '=') { event.preventDefault(); equals(); }
+    else if (event.key === 'Escape') { setScreen('0'); window.__calcPending = null; expression.textContent = ''; clearError(); }
+    else if (event.key === 'Backspace') { event.preventDefault(); setScreen(current.length > 1 ? current.slice(0, -1) : '0'); }
+    else if (/^[0-9.]$/.test(event.key)) { event.preventDefault(); if (event.key === '.') { if (!current.includes('.')) append('.'); } else digit(event.key); }
+    else if (['+','-','*','/','%','^'].includes(event.key)) {
+      event.preventDefault(); const op = {'+':'add','-':'subtract','*':'multiply','/':'divide','%':'modulo','^':'power'}[event.key]; binaryAction(op);
+    }
+  });
+  document.getElementById('clearHistory').addEventListener('click', () => { localStorage.removeItem(HISTORY_KEY); renderHistory(); });
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(theme) { document.documentElement.dataset.theme = theme; themeToggle.textContent = theme === 'dark' ? '☀️ Theme' : '🌙 Theme'; try { localStorage.setItem(THEME_KEY, theme); } catch (_) {} }
+  themeToggle.addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+  let savedTheme = 'light'; try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (_) {}
+  setTheme(savedTheme);
+  renderHistory();
+})();
+</script>
+</body>
+</html>
