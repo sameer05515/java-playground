@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+app:
+  frontend-url: http://localhost:5173
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 
+            client-secret: 
+            scope:
+              - openid
+              - profile
+              - email
+              - https://www.googleapis.com/auth/gmail.readonly
+        provider:
+          google:
+            issuer-uri: https://accounts.google.com
